@@ -8,7 +8,7 @@ vErtex es un motor de auditoría diseñado para analizar superficies de ataque w
 * 🛡️ **Security Headers:** Análisis de CSP, HSTS y X-Frame.
 * 📸 **Stealth Capture:** Captura de pantalla en modo Headless (Bypass SSL).
 * 📄 **Auto-Reporting:** Generación de reporte forense en PDF.
-# 🦅 vErtex v2.1
+# 🦅 vErtex v3.1
 **vErtex** es una herramienta de auditoría de seguridad automatizada diseñada para el reconocimiento rápido de superficies de ataque web, análisis de cabeceras, geolocalización de servidores y generación de informes forenses en PDF.
 
 ---
