@@ -22,8 +22,6 @@ def show_banner():
           \_/\___|_|  \__\___/_\_\  
                                     
         {Fore.WHITE}Auditoría de Superficie de Ataque v2.1
-        {Fore.RED}Nombre del Programa: vErtex
-        {Fore.RED}Autor: albertChOXrX
 {Style.RESET_ALL}"""
     print(banner)
 
