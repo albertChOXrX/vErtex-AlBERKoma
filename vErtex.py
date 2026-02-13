@@ -13,7 +13,6 @@ init(autoreset=True)
 
 def show_banner():
     os.system('clear')
-    # Banner corregido con el nombre exacto: vErtex
     banner = f"""
 {Fore.CYAN}{Style.BRIGHT}
         __   __        _            
@@ -21,7 +20,9 @@ def show_banner():
          \ V / -_) '_ \  _/ -_) \ / 
           \_/\___|_|  \__\___/_\_\  
                                     
-        {Fore.WHITE}Auditoría de Superficie de Ataque v2.1
+        {Fore.WHITE}Auditoría de Superficie de Ataque v2.2
+        {Fore.RED}Nombre del Programa: vErtex
+        {Fore.RED}Autor: albertChOXrX
 {Style.RESET_ALL}"""
     print(banner)
 
@@ -37,6 +38,7 @@ class RajaEngine:
         self.results = []
         self.pdf = RAJA_Report()
         self.screenshot_path = None
+        self.target_ip = None
 
     def log(self, text, status="info"):
         timestamp = datetime.now().strftime('%H:%M:%S')
@@ -48,16 +50,32 @@ class RajaEngine:
     def get_geo(self):
         self.log(f"Rastreando ubicación del servidor...")
         try:
-            ip = socket.gethostbyname(self.target)
-            response = requests.get(f"http://ip-api.com/json/{ip}", timeout=5)
+            self.target_ip = socket.gethostbyname(self.target)
+            response = requests.get(f"http://ip-api.com/json/{self.target_ip}", timeout=5)
             data = response.json()
             if data.get('status') == 'success':
-                info = f"IP: {ip} | {data['city']}, {data['country']} ({data['isp']})"
+                info = f"IP: {self.target_ip} | {data['city']}, {data['country']} ({data['isp']})"
                 self.log(info, "success")
             else:
                 self.log("No se obtuvieron datos de geolocalización.", "error")
         except Exception as e:
-            self.log(f"Error de red en geo-módulo: {str(e)}", "error")
+            self.log(f"Error en geo-módulo: {str(e)}", "error")
+
+    # --- NUEVA FUNCIÓN: ESCANEO DE PUERTOS ---
+    def scan_ports(self):
+        self.log(f"Iniciando escaneo de puertos comunes en {self.target_ip}...")
+        common_ports = [21, 22, 23, 25, 53, 80, 110, 443, 445, 3306, 3389, 8080]
+        found_any = False
+        for port in common_ports:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(0.5)
+            result = s.connect_ex((self.target_ip, port))
+            if result == 0:
+                self.log(f"Puerto Abierto Encontrado: {port}", "success")
+                found_any = True
+            s.close()
+        if not found_any:
+            self.log("No se detectaron puertos comunes abiertos.", "info")
 
     def analyze_headers(self):
         url = f"https://{self.target}"
@@ -65,17 +83,17 @@ class RajaEngine:
             res = requests.get(url, timeout=10, verify=False)
             headers = res.headers
             self.log(f"Analizando cabeceras de seguridad...")
-            checks = {"Content-Security-Policy": "XSS", "X-Frame-Options": "Clickjacking"}
+            checks = {"Content-Security-Policy": "XSS", "X-Frame-Options": "Clickjacking", "Strict-Transport-Security": "HSTS"}
             for h, desc in checks.items():
                 if h in headers: self.log(f"{h}: OK", "success")
-                else: self.log(f"{h}: AUSENTE", "error")
+                else: self.log(f"{h}: AUSENTE (Riesgo: {desc})", "error")
         except: self.log("Error al conectar para cabeceras", "error")
 
     def dns_recon(self):
         self.log(f"Ejecutando DNS Recon...")
         try:
             answers = dns.resolver.resolve(self.target, 'A')
-            for rdata in answers: self.log(f"Registro A encontrado: {rdata}", "success")
+            for rdata in answers: self.log(f"Registro A: {rdata}", "success")
         except: self.log("No se encontraron registros DNS públicos", "error")
 
     def take_screenshot(self):
@@ -123,15 +141,15 @@ def main():
     target_input = input(Fore.YELLOW + "🎯 Ingrese URL objetivo: ")
     if not target_input: return
 
-    # Iniciamos el motor vErtex
     engine = RajaEngine(target_input)
 
-    # Flujo de trabajo secuencial
-    engine.get_geo()
-    engine.analyze_headers()
-    engine.dns_recon()
-    engine.take_screenshot()
-    engine.generate_pdf()
+    # FLUJO v2.2
+    engine.get_geo()         # Localiza
+    engine.scan_ports()      # ESCANEA (Nuevo)
+    engine.analyze_headers() # Seguridad
+    engine.dns_recon()       # DNS
+    engine.take_screenshot() # Foto
+    engine.generate_pdf()    # Reporte
 
 if __name__ == "__main__":
     main()
