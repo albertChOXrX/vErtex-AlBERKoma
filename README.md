@@ -65,5 +65,5 @@ Desarrollado por [albertChOXrX](https://github.com/albertChOXrX)
 
 ---
 **¡Gracias por usar vErtex!** Si te gusta este proyecto, dale una ⭐ en GitHub.
-⚠️ Aviso Legal
+## ⚠️ Aviso Legal
 Este software es para fines educativos y auditoría ética. El autor no se hace responsable del uso indebido.
