@@ -181,7 +181,7 @@ python3 vErtex.py
 
 ```bash
 # Iniciar escaneo
-python3 vertex_v6.py
+python3 vErtex.py
 
 # Seleccionar modo de escaneo:
 # 1. Fast     - 2-3 minutos   (Quick check)
