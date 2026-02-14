@@ -29,3 +29,10 @@ config.ini
 # OS
 .DS_Store
 Thumbs.db
+# Ignorar archivos JSON de configuración o resultados
+*.json
+
+# Ignorar carpetas de entornos virtuales o VS Code
+__pycache__/
+.vscode/
+.env
