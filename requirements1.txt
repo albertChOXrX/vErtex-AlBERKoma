@@ -1,0 +1,54 @@
+# vErtex v6.0 Enterprise Edition - Dependencies
+
+# Core HTTP and Networking
+requests>=2.31.0
+urllib3>=2.1.0
+
+# Terminal Colors and Formatting
+colorama>=0.4.6
+
+# PDF Report Generation
+fpdf>=1.7.2
+
+# Web Automation and Screenshots
+selenium>=4.15.0
+
+# DNS Analysis
+dnspython>=2.4.0
+
+# WHOIS Information
+python-whois>=0.8.0
+
+# Optional: Enhanced Features
+# Uncomment if you want these features
+
+# Advanced HTML Parsing
+# beautifulsoup4>=4.12.0
+# lxml>=4.9.0
+
+# HTTP/2 Support
+# httpx>=0.25.0
+
+# Advanced JSON handling
+# ujson>=5.8.0
+
+# Database for historical scans
+# sqlalchemy>=2.0.0
+
+# Web server for dashboard (future)
+# flask>=3.0.0
+# flask-cors>=4.0.0
+
+# API documentation
+# flask-swagger-ui>=4.11.0
+
+# Async support
+# aiohttp>=3.9.0
+
+# Additional Security Tools
+# pycryptodome>=3.19.0
+# pyopenssl>=23.3.0
+
+# Machine Learning (future threat detection)
+# scikit-learn>=1.3.0
+# numpy>=1.24.0

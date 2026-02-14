@@ -1,3 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+*.egg-info/
+
+# vErtex outputs
 *.pdf
 *.png
-__pycache__/
+screenshot_*.png
+vErtex_Report_*.pdf
+vErtex_Data_*.json
+*.backup.*
+
+# API Keys
+.env
+config.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
